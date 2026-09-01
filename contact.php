@@ -20,7 +20,7 @@ function respond(bool $success, string $message, int $status = 200): void
 
     header('Content-Type: text/html; charset=utf-8');
     $title = $success ? 'Messaggio inviato' : 'Messaggio non inviato';
-    echo '<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title><link rel="stylesheet" href="assets/css/styles.css?v=20260901-16"></head><body><main class="section"><div class="container"><h1>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</h1><p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p><p><a class="btn primary" href="index.html#contatti">Torna al sito</a></p></div></main></body></html>';
+    echo '<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title><link rel="stylesheet" href="assets/css/styles.css?v=20260901-17"></head><body><main class="section"><div class="container"><h1>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</h1><p>' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</p><p><a class="btn primary" href="index.html#contatti">Torna al sito</a></p></div></main></body></html>';
     exit;
 }
 

@@ -583,6 +583,51 @@
     }
   }, 8500);
 
+  const eventLightbox = document.querySelector("[data-event-lightbox]");
+  const eventLightboxImage = eventLightbox?.querySelector("[data-event-lightbox-image]");
+  const eventLightboxCaption = eventLightbox?.querySelector("[data-event-lightbox-caption]");
+  let eventLightboxTrigger = null;
+
+  const closeEventLightbox = () => {
+    if (!eventLightbox?.open) return;
+    if (typeof eventLightbox.close === "function") {
+      eventLightbox.close();
+    } else {
+      eventLightbox.removeAttribute("open");
+      eventLightbox.dispatchEvent(new Event("close"));
+    }
+  };
+
+  document.querySelectorAll("[data-event-image]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!eventLightbox || !eventLightboxImage || !eventLightboxCaption) return;
+      const thumbnail = link.querySelector("img");
+      const title = link.closest(".event-card")?.querySelector("h3")?.textContent?.trim() || "Locandina evento";
+      eventLightboxTrigger = link;
+      eventLightboxImage.src = link.getAttribute("href") || thumbnail?.currentSrc || thumbnail?.src || "";
+      eventLightboxImage.alt = thumbnail?.alt || title;
+      eventLightboxCaption.textContent = title;
+      if (typeof eventLightbox.showModal === "function") {
+        eventLightbox.showModal();
+      } else {
+        eventLightbox.setAttribute("open", "");
+      }
+      document.body.classList.add("modal-open");
+      eventLightbox.querySelector("[data-event-lightbox-close]")?.focus();
+    });
+  });
+
+  eventLightbox?.querySelector("[data-event-lightbox-close]")?.addEventListener("click", closeEventLightbox);
+  eventLightbox?.addEventListener("click", (event) => {
+    if (event.target === eventLightbox) closeEventLightbox();
+  });
+  eventLightbox?.addEventListener("close", () => {
+    if (!document.querySelector("dialog[open]")) document.body.classList.remove("modal-open");
+    eventLightboxTrigger?.focus();
+    eventLightboxTrigger = null;
+  });
+
   const legalDialogs = document.querySelectorAll("[data-legal-dialog]");
   let legalTrigger = null;
 
